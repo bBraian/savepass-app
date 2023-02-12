@@ -1,19 +1,18 @@
 import styled from 'styled-components/native';
 import Feather from '@expo/vector-icons/Feather';
-import { LinearGradient } from 'expo-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export const Container = styled(LinearGradient).attrs({
-  end: { x: 1, y: 0 }
+export const Container = styled.TouchableOpacity.attrs({
+  activeOpacity: 1
 })`
-  border: 1px #e3e4e5;
+  border: 1px #303030;
   flex-direction: row;
   align-items: center;
   min-height: ${RFValue(80)}px;
   width: 100%;
   border-radius: 4px;
   padding: 22px 20px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 `;
 
 export const ShowPasswordButton = styled.TouchableOpacity``;
@@ -50,11 +49,11 @@ export const BoldTitle = styled.Text`
   margin-bottom: ${RFValue(4)}px;
   font-family: 'Rubik_500Medium';
   font-size: ${RFValue(15)}px;
-  color: #3D434D;
+  color: #FDFDFD;
 `;
 
 export const Email = styled.Text`
   font-family: 'Rubik_400Regular';
   font-size: ${RFValue(13)}px;
-  color: #888D97;
+  color: #B1B1B1;
 `;

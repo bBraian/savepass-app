@@ -30,6 +30,18 @@ export function Home() {
 
   async function loadData() {
     const dataKey = '@savepass:logins';
+
+    const fakedata = [
+      {id: '1', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '2', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '3', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '4', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '5', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '6', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '7', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
+      {id: '8', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'}
+    ];
+    setSearchListData(fakedata)
     // Get asyncStorage data, use setSearchListData and setData
   }
 
@@ -38,7 +50,7 @@ export function Home() {
   }
 
   function handleChangeInputText(text: string) {
-    // Update searchText value
+    setSearchText(text)
   }
 
   useFocusEffect(useCallback(() => {
@@ -49,7 +61,7 @@ export function Home() {
     <>
       <Header
         user={{
-          name: 'Rocketseat',
+          name: 'Braian',
           avatar_url: 'https://i.ibb.co/ZmFHZDM/rocketseat.jpg'
         }}
       />

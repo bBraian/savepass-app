@@ -25,8 +25,9 @@ export const InputContainer = styled.View`
   flex-direction: row;
   align-items: center;
 
-  background: #FFFFFF;
-  border: 1px #e3e4e5;
+  
+  background: #242424;
+  border: 1px #303030;
   padding: 0 20px;
   border-radius: 4px;
   height: ${RFValue(56)}px;

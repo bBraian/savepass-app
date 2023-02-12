@@ -41,15 +41,7 @@ export function Header({ user }: HeaderProps) {
   return (
     <Container
       hasUserData={!!user}
-      style={{
-        ...(user
-          ? {
-            backgroundColor: '#1967FB'
-          }
-          : {
-            backgroundColor: '#FFFFFF'
-          })
-      }}
+      style={{...(user ? { backgroundColor: '#1967FB' } : { backgroundColor: '#111111' })}}
     >
       {user ? (
         <>
@@ -80,12 +72,12 @@ export function Header({ user }: HeaderProps) {
           <BackButton onPress={goBack}>
             <Icon
               name="chevron-left"
-              color="#1967FB"
+              color="#FFFFFF"
               size={28}
             />
           </BackButton>
 
-          <Title>Cadastro de senha</Title>
+          <Title>Cadastro</Title>
         </>
       )}
     </Container>

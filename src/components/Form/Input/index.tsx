@@ -16,7 +16,7 @@ interface Props extends TextInputProps {
   control: Control;
   name: string;
   title: string;
-  error: string;
+  error: string | boolean;
 }
 
 export function Input({

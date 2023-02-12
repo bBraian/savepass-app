@@ -17,6 +17,7 @@ import {
   Form
 } from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 interface FormData {
   service_name: string;
@@ -36,8 +37,11 @@ type RootStackParamList = {
 };
 
 type NavigationProps = StackNavigationProp<RootStackParamList, 'RegisterLoginData'>;
+type RouteProps = RouteProp<RootStackParamList, 'RegisterLoginData'>;
 
-export function RegisterLoginData() {
+export function RegisterLoginData({ route }: any) {
+  const router = route.params;
+  console.log(router);
   const { navigate } = useNavigation<NavigationProps>()
   const {
     control,
@@ -73,10 +77,7 @@ export function RegisterLoginData() {
             testID="service-name-input"
             title="Nome do serviço"
             name="service_name"
-            error={
-              // Replace here with real content
-              'Has error ? show error message'
-            }
+            error={false}
             control={control}
             autoCapitalize="sentences"
             autoCorrect
@@ -85,10 +86,7 @@ export function RegisterLoginData() {
             testID="email-input"
             title="E-mail ou usuário"
             name="email"
-            error={
-              // Replace here with real content
-              'Has error ? show error message'
-            }
+            error={false}
             control={control}
             autoCorrect={false}
             autoCapitalize="none"
@@ -98,10 +96,7 @@ export function RegisterLoginData() {
             testID="password-input"
             title="Senha"
             name="password"
-            error={
-              // Replace here with real content
-              'Has error ? show error message'
-            }
+            error={false}
             control={control}
             secureTextEntry
           />
@@ -111,7 +106,7 @@ export function RegisterLoginData() {
               marginTop: RFValue(8)
             }}
             title="Salvar"
-            onPress={handleSubmit(handleRegister)}
+            onPress={handleSubmit(() => handleRegister)}
           />
         </Form>
       </Container>

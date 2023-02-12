@@ -12,7 +12,7 @@ export const Container = styled.View<ContainerProps>`
   align-items: center;
   padding: ${({ hasUserData }) => hasUserData
     ? `${getStatusBarHeight(true) + 16}px  24px 60px 24px`
-    : `${getStatusBarHeight(true) + 9}px 0 23px 0`
+    : `${getStatusBarHeight(true) + 18}px 24px 23px 24px`
   }
   ${({ hasUserData }) => hasUserData && css`
     justify-content: space-between;
@@ -64,13 +64,13 @@ export const Icon = styled(Feather)``;
 
 export const BackButton = styled.Pressable`
   position: absolute;
-  left: 13px;
+  left: 24px;
   bottom: 23px;
 `;
 
 export const Title = styled.Text`
   font-size: ${RFValue(20)}px;
   font-family: 'Rubik_500Medium';
-  color: #3D434D;
+  color: #ffffff;
   margin: auto;
 `;
