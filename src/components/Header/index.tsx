@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -32,6 +32,7 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 export function Header({ user }: HeaderProps) {
+  const [buttonBg, setButtonBg] = useState('#282B4D');
   const { navigate, goBack } = useNavigation<NavigationProps>();
 
   function handleAddPass() {
@@ -41,7 +42,7 @@ export function Header({ user }: HeaderProps) {
   return (
     <Container
       hasUserData={!!user}
-      style={{...(user ? { backgroundColor: '#1967FB' } : { backgroundColor: '#111111' })}}
+      style={{...(user ? { backgroundColor: '#282B4D' } : { backgroundColor: '#111111' })}}
     >
       {user ? (
         <>
@@ -59,7 +60,12 @@ export function Header({ user }: HeaderProps) {
             </TextContainer>
           </AboutUser>
 
-          <AddButton onPress={handleAddPass}>
+          <AddButton 
+            onPress={handleAddPass} 
+            onPressIn={() => setButtonBg('#323560')}
+            onPressOut={() => setButtonBg('#282B4D')}
+            style={{backgroundColor: buttonBg}}
+          >
             <Icon
               name="plus"
               color="#FFFFFF"

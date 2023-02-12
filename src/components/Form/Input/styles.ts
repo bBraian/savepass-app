@@ -10,7 +10,7 @@ export const Container = styled.View`
 export const Label = styled.Text`
   font-family: 'Rubik_400Regular';
   font-size: ${RFValue(15)}px;
-  color: #888D97;
+  color: #FFFFFF;
   margin-bottom: 7px;
 `;
 
@@ -25,7 +25,6 @@ export const InputContainer = styled.View`
   flex-direction: row;
   align-items: center;
 
-  
   background: #242424;
   border: 1px #303030;
   padding: 0 20px;
@@ -35,7 +34,7 @@ export const InputContainer = styled.View`
 `;
 
 export const FormInput = styled(TextInput)`
-  color: #3D434D;
+  color: #888D97;
   font-size: ${(RFValue(15))}px;
   flex: 1;
   height: 100%;

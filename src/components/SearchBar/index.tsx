@@ -21,7 +21,7 @@ export function SearchBar({
     <Container>
       <Input
         {...rest}
-        placeholderTextColor='#888D97'
+        placeholderTextColor='#b9b9b9'
       />
 
       <Button onPress={onSearchButtonPress} testID="search-button">

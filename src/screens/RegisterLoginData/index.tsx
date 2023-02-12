@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
@@ -40,8 +40,9 @@ type NavigationProps = StackNavigationProp<RootStackParamList, 'RegisterLoginDat
 type RouteProps = RouteProp<RootStackParamList, 'RegisterLoginData'>;
 
 export function RegisterLoginData({ route }: any) {
-  const router = route.params;
-  console.log(router);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({} as FormData);
+
   const { navigate } = useNavigation<NavigationProps>()
   const {
     control,
@@ -64,6 +65,14 @@ export function RegisterLoginData({ route }: any) {
     // Save data on AsyncStorage and navigate to 'Home' screen
   }
 
+  useEffect(() => {
+    const router = route.params;
+    if(router) {
+      setIsEditing(true);
+      setEditData(router);
+    }
+  })
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -79,6 +88,7 @@ export function RegisterLoginData({ route }: any) {
             name="service_name"
             error={false}
             control={control}
+            edit={isEditing ? editData.service_name : false}
             autoCapitalize="sentences"
             autoCorrect
           />
@@ -88,6 +98,7 @@ export function RegisterLoginData({ route }: any) {
             name="email"
             error={false}
             control={control}
+            edit={isEditing ? editData.email : false}
             autoCorrect={false}
             autoCapitalize="none"
             keyboardType="email-address"
@@ -97,15 +108,27 @@ export function RegisterLoginData({ route }: any) {
             title="Senha"
             name="password"
             error={false}
+            edit={isEditing ? editData.password : false}
             control={control}
             secureTextEntry
           />
+
+          { isEditing && 
+            <Button
+              style={{
+                marginTop: RFValue(8),
+                marginBottom: RFValue(8),
+                backgroundColor: '#BB2D3A'
+              }}
+              title='Excluir' 
+            />
+          }
 
           <Button
             style={{
               marginTop: RFValue(8)
             }}
-            title="Salvar"
+            title={isEditing ? 'Atualizar' : 'Salvar'}
             onPress={handleSubmit(() => handleRegister)}
           />
         </Form>

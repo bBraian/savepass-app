@@ -17,6 +17,7 @@ interface Props extends TextInputProps {
   name: string;
   title: string;
   error: string | boolean;
+  edit?: string | boolean
 }
 
 export function Input({
@@ -24,6 +25,7 @@ export function Input({
   control,
   title,
   error,
+  edit,
   secureTextEntry,
   ...rest
 }: Props) {
@@ -41,7 +43,7 @@ export function Input({
             <FormInput
               {...rest}
               onChangeText={onChange}
-              value={value}
+              value={edit ? edit : value}
               secureTextEntry={secureTextEntry && passwordHidden}
             />
             {secureTextEntry && (

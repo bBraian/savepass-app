@@ -21,14 +21,15 @@ interface Props {
   password: string;
 }
 
+export interface EditProps {
+  service_name?: string,
+  email?: string,
+  password?: string
+}
+
 type RootStackParamList = {
   Home: undefined;
-  RegisterLoginData: {
-    edit?: boolean,
-    service_name?: string,
-    email?: string,
-    password?: string,
-  };
+  RegisterLoginData: EditProps;
 };
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
@@ -47,9 +48,8 @@ export function LoginDataItem({
   }
 
   function handleEditRegister() {
-    Vibration.vibrate(50)
+    Vibration.vibrate(35)
     navigate('RegisterLoginData', {
-      edit: true,
       service_name,
       email,
       password
