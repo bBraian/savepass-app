@@ -13,6 +13,7 @@ import {
   TotalPassCount,
   LoginList,
 } from './styles';
+import { Alert } from 'react-native';
 
 interface LoginDataProps {
   id: string;
@@ -31,18 +32,17 @@ export function Home() {
   async function loadData() {
     const dataKey = '@savepass:logins';
 
-    const fakedata = [
-      {id: '1', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '2', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '3', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '4', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '5', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '6', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '7', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'},
-      {id: '8', service_name: 'google', email: 'www.braian@gmail.com', password: '123123'}
-    ];
-    setSearchListData(fakedata)
-    // Get asyncStorage data, use setSearchListData and setData
+    try {
+      const response = await AsyncStorage.getItem(dataKey);
+      const responseFormatted = response ? JSON.parse(response) : [];
+      setData(responseFormatted);
+      setSearchListData(responseFormatted);
+      console.log(responseFormatted)
+    } catch(error) {
+      console.log(error);
+      Alert.alert('Erro ao buscar dados');
+
+    }
   }
 
   function handleFilterLoginData() {

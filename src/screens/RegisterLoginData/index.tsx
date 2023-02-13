@@ -47,6 +47,7 @@ export function RegisterLoginData({ route }: any) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: {
       errors
     }
@@ -62,7 +63,18 @@ export function RegisterLoginData({ route }: any) {
 
     const dataKey = '@savepass:logins';
 
-    // Save data on AsyncStorage and navigate to 'Home' screen
+    try {
+      const storageData = await AsyncStorage.getItem(dataKey);
+      const currentData = storageData ? JSON.parse(storageData) : [];
+      const dataFormatted = [ ...currentData, newLoginData ];
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+
+      reset();
+      navigate('Home');
+    } catch(error) {
+      console.log(error);
+      Alert.alert("Não foi possível salvar");
+    }
   }
 
   useEffect(() => {
@@ -129,7 +141,7 @@ export function RegisterLoginData({ route }: any) {
               marginTop: RFValue(8)
             }}
             title={isEditing ? 'Atualizar' : 'Salvar'}
-            onPress={handleSubmit(() => handleRegister)}
+            onPress={handleSubmit(handleRegister)}
           />
         </Form>
       </Container>

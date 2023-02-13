@@ -15,7 +15,6 @@ export const Input = styled(TextInput)`
   font-size: ${(RFValue(15))}px;
   color: #888888;
   font-family: 'Rubik_400Regular';
-  font-size: 15px;
   flex: 1;
   padding: 0 20px;
   background: #242424;
