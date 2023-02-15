@@ -32,7 +32,7 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 export function Header({ user }: HeaderProps) {
-  const [buttonBg, setButtonBg] = useState('#282B4D');
+  const [buttonBg, setButtonBg] = useState('#624ee4');
   const { navigate, goBack } = useNavigation<NavigationProps>();
 
   function handleAddPass() {
@@ -42,7 +42,7 @@ export function Header({ user }: HeaderProps) {
   return (
     <Container
       hasUserData={!!user}
-      style={{...(user ? { backgroundColor: '#282B4D' } : { backgroundColor: '#111111' })}}
+      style={{...(user ? { backgroundColor: '#624ee4' } : { backgroundColor: '#111111' })}}
     >
       {user ? (
         <>
@@ -62,8 +62,8 @@ export function Header({ user }: HeaderProps) {
 
           <AddButton 
             onPress={handleAddPass} 
-            onPressIn={() => setButtonBg('#323560')}
-            onPressOut={() => setButtonBg('#282B4D')}
+            onPressIn={() => setButtonBg('#5f4dd4')}
+            onPressOut={() => setButtonBg('#624ee4')}
             style={{backgroundColor: buttonBg}}
           >
             <Icon

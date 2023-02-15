@@ -26,7 +26,7 @@ export const Input = styled(TextInput)`
 `;
 
 export const Button = styled.Pressable`
-  background: #14D1E0;
+  background: #dbdb53;
   padding: 16px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;

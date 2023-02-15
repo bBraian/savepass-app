@@ -8,7 +8,7 @@ export const Container = styled.View`
 export const Header = styled.View`
     width: 100%;
     height: 70%;
-    background-color: #282B4D;
+    background-color: #624ee4;
     justify-content: flex-end;
     align-items: center;
 `;
@@ -42,6 +42,6 @@ export const SignInTitle = styled.Text`
 export const Footer = styled.View`
     width: 100%;
     height: 30%;
-    background-color: #14D1E0;
+    background-color: #624ee4;
     padding: 0 ${RFValue(24)}px;
 `;

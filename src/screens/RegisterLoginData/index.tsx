@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Alert, KeyboardAvoidingView, Platform } from 'react-native';
-import { useForm } from 'react-hook-form';
+import { Control, FieldValues, useForm } from 'react-hook-form';
 import { RFValue } from 'react-native-responsive-fontsize';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -51,11 +51,35 @@ export function RegisterLoginData({ route }: any) {
     formState: {
       errors
     }
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema)
   });
 
+  const formControll = control as unknown as Control<FieldValues, any>
+
   async function handleRegister(formData: FormData) {
+    const newLoginData = {
+      id: String(uuid.v4()),
+      ...formData
+    }
+
+    const dataKey = '@savepass:logins';
+
+    try {
+      const storageData = await AsyncStorage.getItem(dataKey);
+      const currentData = storageData ? JSON.parse(storageData) : [];
+      const dataFormatted = [ ...currentData, newLoginData ];
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+
+      reset();
+      navigate('Home');
+    } catch(error) {
+      console.log(error);
+      Alert.alert("Não foi possível salvar");
+    }
+  }
+
+  async function handleUpdate(formData: FormData) {
     const newLoginData = {
       id: String(uuid.v4()),
       ...formData
@@ -99,7 +123,7 @@ export function RegisterLoginData({ route }: any) {
             title="Nome do serviço"
             name="service_name"
             error={false}
-            control={control}
+            control={formControll}
             edit={isEditing ? editData.service_name : false}
             autoCapitalize="sentences"
             autoCorrect
@@ -109,7 +133,7 @@ export function RegisterLoginData({ route }: any) {
             title="E-mail ou usuário"
             name="email"
             error={false}
-            control={control}
+            control={formControll}
             edit={isEditing ? editData.email : false}
             autoCorrect={false}
             autoCapitalize="none"
@@ -121,7 +145,7 @@ export function RegisterLoginData({ route }: any) {
             name="password"
             error={false}
             edit={isEditing ? editData.password : false}
-            control={control}
+            control={formControll}
             secureTextEntry
           />
 
@@ -141,7 +165,7 @@ export function RegisterLoginData({ route }: any) {
               marginTop: RFValue(8)
             }}
             title={isEditing ? 'Atualizar' : 'Salvar'}
-            onPress={handleSubmit(handleRegister)}
+            onPress={isEditing ? handleSubmit(handleUpdate) : handleSubmit(handleRegister)}
           />
         </Form>
       </Container>
