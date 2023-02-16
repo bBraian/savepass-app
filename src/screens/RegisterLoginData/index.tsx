@@ -20,7 +20,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 interface FormData {
-  id?: string;
+  id?: string | undefined;
   service_name: string;
   email: string;
   password: string;
@@ -43,7 +43,6 @@ type RouteProps = RouteProp<RootStackParamList, 'RegisterLoginData'>;
 export function RegisterLoginData({ route }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({} as FormData);
-  const handlePress = isEditing ? handleUpdate : handleRegister;
 
   const { navigate } = useNavigation<NavigationProps>()
   const {
@@ -100,7 +99,7 @@ export function RegisterLoginData({ route }: any) {
     }
   }
 
-  async function handleDeleteRegister() {
+  async function handleDelete() {
     const dataKey = '@savepass:logins';
 
     try {
@@ -119,6 +118,10 @@ export function RegisterLoginData({ route }: any) {
       console.log(error);
       Alert.alert("Não foi possível excluir");
     }
+  }
+
+  function handleGetFormError(e: any) {
+    console.log(e);
   }
 
   useEffect(() => {
@@ -177,7 +180,7 @@ export function RegisterLoginData({ route }: any) {
                 backgroundColor: '#BB2D3A'
               }}
               title='Excluir'
-              onPress={handleDeleteRegister}
+              onPress={handleDelete}
             />
           }
 
@@ -186,7 +189,7 @@ export function RegisterLoginData({ route }: any) {
               marginTop: RFValue(8)
             }}
             title={isEditing ? 'Atualizar' : 'Salvar'}
-            onPress={handleSubmit(handlePress)}
+            onPress={ isEditing ? handleUpdate : handleSubmit(handleRegister, handleGetFormError)}
           />
         </Form>
       </Container>
