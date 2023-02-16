@@ -94,6 +94,7 @@ export function Home() {
               service_name={loginData.service_name}
               email={loginData.email}
               password={loginData.password}
+              id={loginData.id}
             />
           }}
         />

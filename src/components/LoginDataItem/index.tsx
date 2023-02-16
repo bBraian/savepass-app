@@ -16,12 +16,14 @@ import {
 } from './styles';
 
 interface Props {
+  id: string;
   service_name: string;
   email: string;
   password: string;
 }
 
 export interface EditProps {
+  id: string;
   service_name?: string,
   email?: string,
   password?: string
@@ -37,7 +39,8 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 export function LoginDataItem({
   service_name,
   email,
-  password
+  password,
+  id
 }: Props) {
   const [passIsVisible, setPassIsVisible] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('#242424');
@@ -50,6 +53,7 @@ export function LoginDataItem({
   function handleEditRegister() {
     Vibration.vibrate(35)
     navigate('RegisterLoginData', {
+      id,
       service_name,
       email,
       password

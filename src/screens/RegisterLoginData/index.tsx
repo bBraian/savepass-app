@@ -20,6 +20,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 interface FormData {
+  id?: string;
   service_name: string;
   email: string;
   password: string;
@@ -42,6 +43,7 @@ type RouteProps = RouteProp<RootStackParamList, 'RegisterLoginData'>;
 export function RegisterLoginData({ route }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({} as FormData);
+  const handlePress = isEditing ? handleUpdate : handleRegister;
 
   const { navigate } = useNavigation<NavigationProps>()
   const {
@@ -79,25 +81,43 @@ export function RegisterLoginData({ route }: any) {
     }
   }
 
-  async function handleUpdate(formData: FormData) {
-    const newLoginData = {
-      id: String(uuid.v4()),
-      ...formData
-    }
-
+  async function handleUpdate() {
     const dataKey = '@savepass:logins';
+    console.log('oi')
 
     try {
       const storageData = await AsyncStorage.getItem(dataKey);
-      const currentData = storageData ? JSON.parse(storageData) : [];
-      const dataFormatted = [ ...currentData, newLoginData ];
-      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+      console.log(storageData);
+      // const currentData = storageData ? JSON.parse(storageData) : [];
+      // const dataFormatted = [ ...currentData, newLoginData ];
+      // await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
 
       reset();
       navigate('Home');
     } catch(error) {
       console.log(error);
       Alert.alert("Não foi possível salvar");
+    }
+  }
+
+  async function handleDeleteRegister() {
+    const dataKey = '@savepass:logins';
+
+    try {
+      const storageData = await AsyncStorage.getItem(dataKey);
+      const currentData: FormData[] = storageData ? JSON.parse(storageData) : [];
+      const newData = currentData.filter(data => {
+        if(data.id !== editData.id) {
+          return data;
+        }
+      })
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newData))
+
+      reset();
+      navigate('Home');
+    } catch(error) {
+      console.log(error);
+      Alert.alert("Não foi possível excluir");
     }
   }
 
@@ -156,7 +176,8 @@ export function RegisterLoginData({ route }: any) {
                 marginBottom: RFValue(8),
                 backgroundColor: '#BB2D3A'
               }}
-              title='Excluir' 
+              title='Excluir'
+              onPress={handleDeleteRegister}
             />
           }
 
@@ -165,7 +186,7 @@ export function RegisterLoginData({ route }: any) {
               marginTop: RFValue(8)
             }}
             title={isEditing ? 'Atualizar' : 'Salvar'}
-            onPress={isEditing ? handleSubmit(handleUpdate) : handleSubmit(handleRegister)}
+            onPress={handleSubmit(handlePress)}
           />
         </Form>
       </Container>
