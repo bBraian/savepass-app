@@ -12,6 +12,7 @@ import { Header } from '../../components/Header';
 import { Input } from '../../components/Form/Input';
 import { Button } from '../../components/Form/Button';
 
+
 import {
   Container,
   Form
@@ -49,6 +50,7 @@ export function RegisterLoginData({ route }: any) {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: {
       errors
     }
@@ -80,16 +82,19 @@ export function RegisterLoginData({ route }: any) {
     }
   }
 
-  async function handleUpdate() {
+  async function handleUpdate(formData: FormData) {
     const dataKey = '@savepass:logins';
-    console.log('oi')
 
     try {
       const storageData = await AsyncStorage.getItem(dataKey);
-      console.log(storageData);
-      // const currentData = storageData ? JSON.parse(storageData) : [];
-      // const dataFormatted = [ ...currentData, newLoginData ];
-      // await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+      const currentData: FormData[] = storageData ? JSON.parse(storageData) : [];
+      const dataWithOutUpdatedOne = currentData.filter(data => {
+        if(data.id !== formData.id) {
+          return data;
+        }
+      })
+      const dataFormatted = [ ...dataWithOutUpdatedOne, formData ];
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
 
       reset();
       navigate('Home');
@@ -130,7 +135,17 @@ export function RegisterLoginData({ route }: any) {
       setIsEditing(true);
       setEditData(router);
     }
-  })
+  }, [])
+
+  useEffect(() => {
+    if(isEditing) {
+      setValue('id', editData.id);
+      setValue('service_name', editData.service_name);
+      setValue('email', editData.email);
+      setValue('password', editData.password);
+    }
+
+  }, [setValue, isEditing]);
 
   return (
     <KeyboardAvoidingView
@@ -147,7 +162,7 @@ export function RegisterLoginData({ route }: any) {
             name="service_name"
             error={false}
             control={formControll}
-            edit={isEditing ? editData.service_name : false}
+            edit={isEditing ? editData.service_name : ""}
             autoCapitalize="sentences"
             autoCorrect
           />
@@ -157,7 +172,7 @@ export function RegisterLoginData({ route }: any) {
             name="email"
             error={false}
             control={formControll}
-            edit={isEditing ? editData.email : false}
+            edit={isEditing ? editData.email : ""}
             autoCorrect={false}
             autoCapitalize="none"
             keyboardType="email-address"
@@ -167,7 +182,7 @@ export function RegisterLoginData({ route }: any) {
             title="Senha"
             name="password"
             error={false}
-            edit={isEditing ? editData.password : false}
+            edit={isEditing ? editData.password : ""}
             control={formControll}
             secureTextEntry
           />
@@ -189,7 +204,7 @@ export function RegisterLoginData({ route }: any) {
               marginTop: RFValue(8)
             }}
             title={isEditing ? 'Atualizar' : 'Salvar'}
-            onPress={ isEditing ? handleUpdate : handleSubmit(handleRegister, handleGetFormError)}
+            onPress={handleSubmit(isEditing ? handleUpdate : handleRegister, handleGetFormError)}
           />
         </Form>
       </Container>

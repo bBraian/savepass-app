@@ -17,7 +17,7 @@ interface Props extends TextInputProps {
   name: string;
   title: string;
   error: string | boolean;
-  edit?: string | boolean
+  edit: string
 }
 
 export function Input({
@@ -43,8 +43,9 @@ export function Input({
             <FormInput
               {...rest}
               onChangeText={onChange}
-              value={edit ? edit : value}
+              value={value}
               secureTextEntry={secureTextEntry && passwordHidden}
+              // defaultValue={edit}
             />
             {secureTextEntry && (
               <ToggleShowPassButton onPress={() => setPasswordHidden(!passwordHidden)}>
