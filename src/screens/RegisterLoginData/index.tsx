@@ -29,7 +29,7 @@ interface FormData {
 
 const schema = Yup.object().shape({
   service_name: Yup.string().required('Nome do serviço é obrigatório!'),
-  email: Yup.string().email('Não é um email válido').required('Email é obrigatório!'),
+  email: Yup.string().required('Email é obrigatório!'),
   password: Yup.string().required('Senha é obrigatória!'),
 })
 
@@ -104,25 +104,32 @@ export function RegisterLoginData({ route }: any) {
     }
   }
 
-  async function handleDelete() {
-    const dataKey = '@savepass:logins';
+  function handleDelete() {
 
-    try {
-      const storageData = await AsyncStorage.getItem(dataKey);
-      const currentData: FormData[] = storageData ? JSON.parse(storageData) : [];
-      const newData = currentData.filter(data => {
-        if(data.id !== editData.id) {
-          return data;
+    Alert.alert('Deseja excluir o registro?', 'Essa ação não poderá ser revertida depois', [
+      { text: 'Cancel' },
+      { text: 'Sim', onPress: async function() {
+        const dataKey = '@savepass:logins';
+
+        try {
+          const storageData = await AsyncStorage.getItem(dataKey);
+          const currentData: FormData[] = storageData ? JSON.parse(storageData) : [];
+          const newData = currentData.filter(data => {
+            if(data.id !== editData.id) {
+              return data;
+            }
+          })
+          await AsyncStorage.setItem(dataKey, JSON.stringify(newData))
+    
+          reset();
+          navigate('Home');
+        } catch(error) {
+          console.log(error);
+          Alert.alert("Não foi possível excluir");
         }
-      })
-      await AsyncStorage.setItem(dataKey, JSON.stringify(newData))
+      }},
+    ]);
 
-      reset();
-      navigate('Home');
-    } catch(error) {
-      console.log(error);
-      Alert.alert("Não foi possível excluir");
-    }
   }
 
   function handleGetFormError(e: any) {

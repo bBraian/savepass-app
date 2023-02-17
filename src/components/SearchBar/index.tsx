@@ -8,15 +8,10 @@ import {
   Icon
 } from './styles';
 
-interface SearchBarProps extends TextInputProps {
-  onSearchButtonPress: () => void;
-}
-
 export function SearchBar({
   style,
-  onSearchButtonPress,
   ...rest
-}: SearchBarProps) {
+}: TextInputProps) {
   return (
     <Container>
       <Input
@@ -24,7 +19,7 @@ export function SearchBar({
         placeholderTextColor='#b9b9b9'
       />
 
-      <Button onPress={onSearchButtonPress} testID="search-button">
+      <Button testID="search-button">
         <Icon name="search" />
       </Button>
     </Container>

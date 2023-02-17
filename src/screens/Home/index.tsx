@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -25,7 +25,7 @@ interface LoginDataProps {
 type LoginListDataProps = LoginDataProps[];
 
 export function Home() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [searchListData, setSearchListData] = useState<LoginListDataProps>([]);
   const [data, setData] = useState<LoginListDataProps>([]);
 
@@ -45,13 +45,17 @@ export function Home() {
     }
   }
 
-  function handleFilterLoginData() {
-    // Filter results inside data, save with setSearchListData
-  }
-
   function handleChangeInputText(text: string) {
     setSearchText(text)
   }
+
+  useEffect(() => {
+    if(searchText === "") {
+      setSearchListData(data);
+    } else {
+      setSearchListData(data.filter(register => register.service_name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())))
+    }
+  }, [searchText])
 
   useFocusEffect(useCallback(() => {
     loadData();
@@ -71,9 +75,6 @@ export function Home() {
           onChangeText={handleChangeInputText}
           value={searchText}
           returnKeyType="search"
-          onSubmitEditing={handleFilterLoginData}
-
-          onSearchButtonPress={handleFilterLoginData}
         />
 
         <Metadata>
