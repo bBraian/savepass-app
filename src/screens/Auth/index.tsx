@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Container } from "./styles";
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 
 type RootStackParamList = {
     Home: undefined;
@@ -21,6 +21,7 @@ export function Auth() {
     return (
         <Container>
             <Text>auth</Text>
+            <Button onPress={() => handleSignInWithGoogle}>Login</Button>
         </Container>
     )
 }
