@@ -3,21 +3,28 @@
     "name": "savepass",
     "slug": "savepass",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#624ee4"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
-    "icon": "./assets/images/icon.png",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#E5E5E5"
+    "ios": {
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#E5E5E5"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#624ee4"
       }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
     }
-  },
-  "name": "savepass"
+  }
 }
