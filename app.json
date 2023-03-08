@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#624ee4"
-      }
+      },
+      "package": "com.bbraaian.savepass"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9ffc2cb4-7474-4851-b34c-ae980c944d5d"
+      }
+    },
+    "owner": "bbraaian"
   }
 }

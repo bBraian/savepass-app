@@ -2,22 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import * as LocalAuthentication from "expo-local-authentication";
 import { AuthButton, ButtonTitle, Container, Hello, Logo, Title, UserName } from "./styles";
 
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Alert, Button } from "react-native";
 
-import img from '../../../assets/images/adaptive-icon.png';
+import img from '../../../assets/adaptive-icon.png';
 import { useEffect, useState } from "react";
-
-type RootStackParamList = {
-    Home: undefined;
-    RegisterLoginData: undefined;
-};
-
-type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 export function Auth() {
     const [fingerPrintSupported, setFingerPrintSupported] = useState(false);
-    const { navigate } = useNavigation<NavigationProps>();
+    const { navigate } = useNavigation();
     
     function handleSignInWithGoogle() {
         navigate('Home');
@@ -27,7 +19,7 @@ export function Auth() {
 
     }
 
-    function alertComponent(title: string, message: string, btnText: string, btnFunction: () => void) {
+    function alertComponent(title, message, btnText, btnFunction) {
         return Alert.alert(title, message), [
             { text: btnText, onPress: btnFunction }
         ]

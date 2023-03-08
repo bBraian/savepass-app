@@ -1,20 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import { SignInButton } from "../../components/SignInButton";
 import { Container, Footer, Header, Photo, SignInTitle, Title, TitleWrapper } from "./styles";
 
-import { StackNavigationProp } from '@react-navigation/stack';
+import img from '../../../assets/adaptive-icon.png';
 
-import img from '../../../assets/images/adaptive-icon.png';
-
-type RootStackParamList = {
-    Home: undefined;
-    RegisterLoginData: undefined;
-};
-
-type NavigationProps = StackNavigationProp<RootStackParamList>;
-
-export function SignIn() {
-    const { navigate } = useNavigation<NavigationProps>();
+export function CreateAccount() {
+    const { navigate } = useNavigation();
 
     function handleSignInWithGoogle() {
         navigate('Home');
@@ -39,7 +29,6 @@ export function SignIn() {
                 </SignInTitle>
             </Header>
             <Footer>
-                <SignInButton onPress={handleSignInWithGoogle} />
             </Footer>
         </Container>
     )

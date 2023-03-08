@@ -10,6 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 
 import { AppRoutes } from './src/routes/app.routes';
+import { UserAuthProvider } from './src/context/userAuth';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -55,7 +56,9 @@ export default function App() {
           backgroundColor="transparent"
           translucent
         />
-        <AppRoutes />
+        <UserAuthProvider>
+          <AppRoutes />
+        </UserAuthProvider>
         {/* <Home /> */}
       </NavigationContainer>
     </View>
