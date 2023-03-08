@@ -1,35 +1,50 @@
 import { useNavigation } from "@react-navigation/native";
-import { Container, Footer, Header, Photo, SignInTitle, Title, TitleWrapper } from "./styles";
-
-import img from '../../../assets/adaptive-icon.png';
+import { useState } from "react";
+import { avatares } from "../../data/avatares";
+import { AvatarImage, AvatarList, Box, ButtonCreateUser, ButtonSelectAvatar, Container, Content, Form, InputDescription, NameInput, TextCreateUser, Title } from "./styles";
 
 export function CreateAccount() {
     const { navigate } = useNavigation();
 
-    function handleSignInWithGoogle() {
+    const [avatarSelected, setAvatarSelected] = useState(0);
+    function handleCreateUser() {
         navigate('Home');
     }
 
     return (
         <Container>
-            <Header>
-                <TitleWrapper>
-                    <Photo source={img} />
+            <Content>
+                <Title>Vamos criar seu usuário!</Title>
 
-                    <Title>
-                        Controle suas{'\n'}
-                        senhas de forma{'\n'}
-                        simples e segura
-                    </Title>
-                </TitleWrapper>
+                <Form>
+                    <Box>
+                        <InputDescription>Selecione um avatar</InputDescription>
+                        <AvatarList>
+                            {avatares.map(avatar => (
+                                <ButtonSelectAvatar
+                                    onPress={() => setAvatarSelected(avatar.id)}
+                                    selected={avatar.id === avatarSelected} 
+                                    key={avatar.id}
+                                >
+                                    <AvatarImage source={avatar.image} />
+                                </ButtonSelectAvatar>
+                            ))}
+                        </AvatarList>
+                    </Box>
+                    <Box>
+                        <InputDescription>Seu nome de usuário</InputDescription>
+                        <NameInput />
+                    </Box>
+                    <Box>
+                        <InputDescription>Senha para entrar no app</InputDescription>
+                        <NameInput />
+                    </Box>
+                </Form>
 
-                <SignInTitle>
-                    Faça seu login com{'\n'}
-                    sua conta google
-                </SignInTitle>
-            </Header>
-            <Footer>
-            </Footer>
+            </Content>
+            <ButtonCreateUser onPress={handleCreateUser}>
+                <TextCreateUser>Criar usuário</TextCreateUser>
+            </ButtonCreateUser>
         </Container>
     )
 }
