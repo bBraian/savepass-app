@@ -13,7 +13,7 @@ import {
   TotalPassCount,
   LoginList,
 } from './styles';
-import { Alert } from 'react-native';
+import { Alert, BackHandler  } from 'react-native';
 import { UserAuth } from '../../context/userAuth';
 import { avatares } from '../../data/avatares';
 
@@ -24,6 +24,26 @@ export function Home() {
   const [data, setData] = useState([]);
   const { user } = useContext(UserAuth);
   const [avatar, setAvatar] = useState({});
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert(
+          'Sair do aplicativo',
+          'Deseja realmente sair do aplicativo?',
+          [
+            { text: 'Não', style: 'cancel' },
+            { text: 'Sim', onPress: () => BackHandler.exitApp() },
+          ]
+        );
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
 
   async function loadData() {
     const dataKey = '@savepass:logins';

@@ -59,10 +59,6 @@ export function CreateAccount() {
             error = true;
             setPasswordError("Senha deve ser numérica");
         }
-        if(username.length < 5) {
-            error = true;
-            setPasswordError("Senha não pode ter menos de 5 caracteres");
-        }
         if(username == "") {
             error = true;
             setUsernameError("Preencha o nome de usuário");
