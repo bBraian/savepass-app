@@ -14,13 +14,14 @@ const {
 
 export function AppRoutes() {
   const { user } = useContext(UserAuth);
+  console.log(user);
   return (
     <Navigator
       screenOptions={{
         headerShown: false
       }}
     >
-      { user.name ? 
+      { user.username ? 
         <Screen name="Auth" component={Auth} />  
       :
         <Screen name="Initial" component={Initial} /> 

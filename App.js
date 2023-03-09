@@ -52,14 +52,12 @@ export default function App() {
     >
       <NavigationContainer>
         <StatusBar
-          barStyle="light-content"
           backgroundColor="transparent"
           translucent
         />
         <UserAuthProvider>
           <AppRoutes />
         </UserAuthProvider>
-        {/* <Home /> */}
       </NavigationContainer>
     </View>
   );

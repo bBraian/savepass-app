@@ -5,15 +5,13 @@ import { AuthButton, ButtonTitle, Container, Hello, Logo, Title, UserName } from
 import { Alert, Button } from "react-native";
 
 import img from '../../../assets/adaptive-icon.png';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserAuth } from "../../context/userAuth";
 
 export function Auth() {
     const [fingerPrintSupported, setFingerPrintSupported] = useState(false);
     const { navigate } = useNavigation();
-    
-    function handleSignInWithGoogle() {
-        navigate('Home');
-    }
+    const { user } = useContext(UserAuth);
 
     function fallBackToDefaultAuth() {
 
@@ -76,9 +74,10 @@ export function Auth() {
             <Logo source={img} />
             <Title>
                 <Hello>Ola, </Hello>
-                <UserName>Braian</UserName>
+                <UserName>{user.username}</UserName>
             </Title>
-            <AuthButton onPress={handleFingerPrintAuth}>
+            <AuthButton onPress={() => navigate('Home')}>
+            {/* <AuthButton onPress={handleFingerPrintAuth}> */}
                 <ButtonTitle>Entrar</ButtonTitle>
             </AuthButton>
         </Container>

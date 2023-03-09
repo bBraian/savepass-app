@@ -7,6 +7,10 @@ export function UserAuthProvider({ children }) {
     const [user, setUser] = useState({})
     const [userStorageLoading, setUserStorageLoading] = useState(true);
 
+    async function createUser(data) {
+        await AsyncStorage.setItem('@savepass:user', JSON.stringify(data))
+    }
+
     useEffect(() => {
         async function loadUserStorageData() {
             const userStorage = await AsyncStorage.getItem('@savepass:user');
@@ -26,7 +30,8 @@ export function UserAuthProvider({ children }) {
                 user,
                 setUser,
                 userStorageLoading,
-                setUserStorageLoading
+                setUserStorageLoading,
+                createUser
             }}
         >
             { children }

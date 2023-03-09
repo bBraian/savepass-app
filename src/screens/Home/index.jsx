@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -14,12 +14,16 @@ import {
   LoginList,
 } from './styles';
 import { Alert } from 'react-native';
+import { UserAuth } from '../../context/userAuth';
+import { avatares } from '../../data/avatares';
 
 
 export function Home() {
   const [searchText, setSearchText] = useState("");
   const [searchListData, setSearchListData] = useState([]);
   const [data, setData] = useState([]);
+  const { user } = useContext(UserAuth);
+  const [avatar, setAvatar] = useState({});
 
   async function loadData() {
     const dataKey = '@savepass:logins';
@@ -50,14 +54,15 @@ export function Home() {
 
   useFocusEffect(useCallback(() => {
     loadData();
+    setAvatar(avatares.find((a) => a.id === user.avatarId));
   }, []));
 
   return (
     <>
       <Header
         user={{
-          name: 'Braian',
-          avatar_url: 'https://github.com/bBraian.png'
+          name: user.username,
+          avatar_url: avatar.image
         }}
       />
       <Container>

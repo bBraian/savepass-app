@@ -31,7 +31,7 @@ export function Header({ user }) {
       {user ? (
         <>
           <AboutUser>
-            <Avatar source={{ uri: user.avatar_url }} />
+            <Avatar source={user.avatar_url} />
 
             <TextContainer>
               <HelloMessage>

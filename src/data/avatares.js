@@ -12,14 +12,14 @@ import witcher from '../images/avatares/witcher.png';
 
 export const avatares = [
     { id: 1, image: detetive },
-    { id: 2, image: elite },
-    { id: 3, image: la_casa },
-    { id: 4, image: lucifer },
+    { id: 2, image: lucifer },
+    { id: 3, image: witcher },
+    { id: 4, image: la_casa },
     { id: 5, image: mestre_round },
     { id: 6, image: nairob },
     { id: 7, image: professor },
     { id: 8, image: roud },
     { id: 9, image: samu },
     { id: 10, image: wil },
-    { id: 11, image: witcher },
+    { id: 11, image: elite },
 ]

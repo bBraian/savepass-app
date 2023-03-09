@@ -1,15 +1,29 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import {StatusBar} from 'react-native';
 
 export const Container = styled.View`
     flex: 1;
     background-color: #111111;
     justify-content: space-between;
-    padding: 36px 24px;
+    padding: 28px 24px 36px 24px;
+`;
+
+export const StatusBarFake = styled.View`
+    height: ${StatusBar.currentHeight}px;
+    background-color: #111111;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
 `;
 
 export const Content = styled.View`
     flex: 1;
+    margin-bottom: 68px;
+    z-index: 2;
+    background-color: #111111;
 `;
 
 export const Title = styled.Text`
@@ -22,12 +36,16 @@ export const Title = styled.Text`
 
 export const Form = styled.View`
     justify-content: center;
-    margin: 100px 0;
+    margin-bottom: 50px;
     flex: 1;
+    background-color: #111111;
+    z-index: 2;
 `;
 
 export const Box = styled.View`
-margin-top: 32px;
+    margin-top: 32px;
+    background-color: #111111;
+    z-index: 2;
 `;
 
 export const InputDescription = styled.Text`
@@ -35,6 +53,13 @@ export const InputDescription = styled.Text`
     font-size: ${RFValue(15)}px;
     color: #FFFFFF;
     margin-bottom: 7px;
+`;
+
+export const ErrorMessage = styled.Text`
+    font-family: 'Rubik_400Regular';
+    font-size: ${RFValue(15)}px;
+    color: red;
+    margin-top: 5px;
 `;
 
 export const AvatarList = styled.ScrollView.attrs({
@@ -54,6 +79,9 @@ export const NameInput = styled.TextInput`
   border-radius: 4px;
   height: ${RFValue(56)}px;
   width: 100%;
+
+  color: #888D97;
+  font-size: ${(RFValue(15))}px;
 `;
 
 export const ButtonSelectAvatar = styled.TouchableOpacity`
@@ -62,7 +90,6 @@ export const ButtonSelectAvatar = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    background-color: blue;
     margin-right: 18px;
     overflow: hidden;
     opacity: ${props => props.selected ? 1 : 0.8};
@@ -82,6 +109,12 @@ export const ButtonCreateUser = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
     border-radius: 4px;
+    position: absolute;
+    bottom: 36px;
+    left: 24px;
+    right: 24px;
+    margin-top: 5px;
+    z-index: 1;
 `;
 
 export const TextCreateUser = styled.Text`
