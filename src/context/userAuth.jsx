@@ -11,8 +11,16 @@ export function UserAuthProvider({ children }) {
         await AsyncStorage.setItem('@savepass:user', JSON.stringify(data))
     }
 
+    function autenticateWithPassword(password) {
+        if(user.password === password) {
+            return true;
+        }
+        return false;
+    }
+
     useEffect(() => {
         async function loadUserStorageData() {
+            // await AsyncStorage.removeItem('@savepass:user');
             const userStorage = await AsyncStorage.getItem('@savepass:user');
 
             if(userStorage) {
@@ -31,7 +39,8 @@ export function UserAuthProvider({ children }) {
                 setUser,
                 userStorageLoading,
                 setUserStorageLoading,
-                createUser
+                createUser,
+                autenticateWithPassword
             }}
         >
             { children }

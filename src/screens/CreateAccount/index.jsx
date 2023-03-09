@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
 
 export function CreateAccount() {
-    const { createUser } = useContext(UserAuth);
+    const { createUser, setUser } = useContext(UserAuth);
     const [avatarSelected, setAvatarSelected] = useState(0);
     const [avatarError, setAvatarError] = useState("");
     const [username, setUsername] = useState("");
@@ -21,6 +21,7 @@ export function CreateAccount() {
         if(!error) {
             try {
                 createUser({avatarId: avatarSelected, username: username, password: password});
+                setUser({avatarId: avatarSelected, username: username, password: password});
                 navigate('Home');
             } catch(error) {
                 Alert.alert('Erro ao criar usuário!')
@@ -49,6 +50,14 @@ export function CreateAccount() {
         if(password.length > 14) {
             error = true;
             setPasswordError("Senha não pode ter mais de 14 caracteres");
+        }
+        if(password.length < 4) {
+            error = true;
+            setPasswordError("Senha não pode ter menos de 4 caracteres");
+        }
+        if(isNaN(parseInt(password))) {
+            error = true;
+            setPasswordError("Senha deve ser numérica");
         }
         if(username.length < 5) {
             error = true;
@@ -101,7 +110,7 @@ export function CreateAccount() {
                     </Box>
                     <Box>
                         <InputDescription>Senha para entrar no app</InputDescription>
-                        <NameInput onChangeText={setPassword} secureTextEntry />
+                        <NameInput onChangeText={setPassword} secureTextEntry keyboardType="numeric" />
                         { passwordError !== "" && <ErrorMessage>{passwordError}</ErrorMessage> }
                     </Box>
                 </Form>

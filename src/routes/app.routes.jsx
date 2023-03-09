@@ -14,7 +14,6 @@ const {
 
 export function AppRoutes() {
   const { user } = useContext(UserAuth);
-  console.log(user);
   return (
     <Navigator
       screenOptions={{
