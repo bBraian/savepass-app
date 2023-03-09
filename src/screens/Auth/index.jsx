@@ -1,21 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
 import * as LocalAuthentication from "expo-local-authentication";
-import { AuthButton, ButtonTitle, Container, Hello, Logo, Title, UserName } from "./styles";
+import { AuthButton, Box, ButtonTitle, Container, Desc, Hello, Logo, Options, Title, UserName } from "./styles";
 
-import { Alert, Button } from "react-native";
+import { Alert } from "react-native";
 
 import img from '../../../assets/adaptive-icon.png';
 import { useContext, useEffect, useState } from "react";
 import { UserAuth } from "../../context/userAuth";
+import { Ionicons } from "@expo/vector-icons";
 
 export function Auth() {
     const [fingerPrintSupported, setFingerPrintSupported] = useState(false);
     const { navigate } = useNavigation();
     const { user } = useContext(UserAuth);
-
-    function fallBackToDefaultAuth() {
-
-    }
 
     function alertComponent(title, message, btnText, btnFunction) {
         return Alert.alert(title, message), [
@@ -24,30 +21,10 @@ export function Auth() {
     }
 
     async function handleFingerPrintAuth() {
-        const isAuth = await LocalAuthentication.hasHardwareAsync();
-        if(!isAuth) {
-            return alertComponent(
-                "Insira sua senha",
-                "Autenticacao por biometria",
-                "Ok",
-                () => fallBackToDefaultAuth()
-            );
-        }
-
-        let biometricSupport;
-
-        if(isAuth) {
-            biometricSupport = await LocalAuthentication.supportedAuthenticationTypesAsync();
-        }
-        const saveBiometrics = await LocalAuthentication.isEnrolledAsync();
-
-        if(!saveBiometrics) {
-            return alertComponent(
-                "Insira sua senha",
-                "Autenticacao por biometria",
-                "Ok",
-                () => fallBackToDefaultAuth()
-            );
+        const available = await LocalAuthentication.hasHardwareAsync();
+        if (!available) {
+            Alert.alert('Não é possível usar a biometria neste dispositivo');
+            return;
         }
 
         const bioAuth = await LocalAuthentication.authenticateAsync({
@@ -55,9 +32,9 @@ export function Auth() {
             cancelLabel: 'Cancelar',
             disableDeviceFallback: true
         })
-
-        if(bioAuth) {
-            console.log('Sucess')
+        console.log(bioAuth);
+        if(bioAuth.success) {
+            navigate('Home')
         }
     }
     
@@ -73,13 +50,23 @@ export function Auth() {
         <Container>
             <Logo source={img} />
             <Title>
-                <Hello>Ola, </Hello>
-                <UserName>{user.username}</UserName>
+                <Box>
+                    <Hello>Ola, </Hello>
+                    <UserName>{user.username}</UserName>
+                </Box>
+                <Desc>Como deseja se autenticar?</Desc>
             </Title>
-            <AuthButton onPress={() => navigate('Home')}>
-            {/* <AuthButton onPress={handleFingerPrintAuth}> */}
-                <ButtonTitle>Entrar</ButtonTitle>
-            </AuthButton>
+            <Options>
+                <AuthButton onPress={handleFingerPrintAuth}>
+                    <Ionicons name="ios-finger-print" size={56} color="white" />
+                    <ButtonTitle>Digital</ButtonTitle>
+                </AuthButton>
+                <AuthButton >
+                    <Ionicons name="ios-key-outline" size={56} color="white" />
+                    <ButtonTitle>Senha</ButtonTitle>
+                </AuthButton>
+            </Options>
+
         </Container>
     )
 }
